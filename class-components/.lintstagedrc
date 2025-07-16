@@ -1,4 +1,5 @@
 {
   "*.css": ["stylelint --fix", "prettier --write"],
-  "*.{ts,tsx}": ["eslint --fix", "prettier --write"]
+  "*.{ts,tsx}": ["eslint --fix", "prettier --write"],
+  "!coverage/**": "echo 'skip coverage files'"
 }
