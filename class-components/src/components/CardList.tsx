@@ -20,6 +20,8 @@ export class CardList extends React.Component<Props, State> {
     error: '',
   };
 
+  static defaultProps = { search: 'the' };
+
   componentDidMount() {
     this.loadBooks(this.props.search);
   }
