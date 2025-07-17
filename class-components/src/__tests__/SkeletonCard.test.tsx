@@ -1,5 +1,8 @@
-describe('Dummy test', () => {
-  it('should pass', () => {
-    expect(true).toBe(true);
+import { render } from '@testing-library/react';
+import { SkeletonCard } from '../components/SkeletonCard';
+
+describe('SkeletonCard', () => {
+  it('renders without crashing', () => {
+    render(<SkeletonCard />);
   });
 });

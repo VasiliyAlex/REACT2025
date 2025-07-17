@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1752737886946" clover="3.2.0">
-  <project timestamp="1752737886946" name="All files">
-    <metrics statements="57" coveredstatements="29" conditionals="31" coveredconditionals="17" methods="20" coveredmethods="11" elements="108" coveredelements="57" complexity="0" loc="57" ncloc="57" packages="3" files="9" classes="9"/>
+<coverage generated="1752740690711" clover="3.2.0">
+  <project timestamp="1752740690711" name="All files">
+    <metrics statements="57" coveredstatements="31" conditionals="31" coveredconditionals="17" methods="20" coveredmethods="12" elements="108" coveredelements="60" complexity="0" loc="57" ncloc="57" packages="3" files="9" classes="9"/>
     <package name="src">
       <metrics statements="11" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="3" coveredmethods="0"/>
       <file name="App.tsx" path="C:\Users\Administrator\Desktop\React\REACT2025\class-components\src\App.tsx">
@@ -35,7 +35,7 @@
       </file>
     </package>
     <package name="src.components">
-      <metrics statements="40" coveredstatements="29" conditionals="20" coveredconditionals="17" methods="16" coveredmethods="11"/>
+      <metrics statements="40" coveredstatements="31" conditionals="20" coveredconditionals="17" methods="16" coveredmethods="12"/>
       <file name="Card.tsx" path="C:\Users\Administrator\Desktop\React\REACT2025\class-components\src\components\Card.tsx">
         <metrics statements="2" coveredstatements="2" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="12" count="5" type="stmt"/>
@@ -90,9 +90,9 @@
         <line num="29" count="8" type="stmt"/>
       </file>
       <file name="SkeletonCard.tsx" path="C:\Users\Administrator\Desktop\React\REACT2025\class-components\src\components\SkeletonCard.tsx">
-        <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
-        <line num="2" count="0" type="stmt"/>
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
       </file>
     </package>
   </project>
