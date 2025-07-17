@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1752732233994" clover="3.2.0">
-  <project timestamp="1752732233994" name="All files">
-    <metrics statements="57" coveredstatements="19" conditionals="31" coveredconditionals="15" methods="20" coveredmethods="7" elements="108" coveredelements="41" complexity="0" loc="57" ncloc="57" packages="3" files="9" classes="9"/>
+<coverage generated="1752737886946" clover="3.2.0">
+  <project timestamp="1752737886946" name="All files">
+    <metrics statements="57" coveredstatements="29" conditionals="31" coveredconditionals="17" methods="20" coveredmethods="11" elements="108" coveredelements="57" complexity="0" loc="57" ncloc="57" packages="3" files="9" classes="9"/>
     <package name="src">
       <metrics statements="11" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="3" coveredmethods="0"/>
       <file name="App.tsx" path="C:\Users\Administrator\Desktop\React\REACT2025\class-components\src\App.tsx">
@@ -35,7 +35,7 @@
       </file>
     </package>
     <package name="src.components">
-      <metrics statements="40" coveredstatements="19" conditionals="20" coveredconditionals="15" methods="16" coveredmethods="7"/>
+      <metrics statements="40" coveredstatements="29" conditionals="20" coveredconditionals="17" methods="16" coveredmethods="11"/>
       <file name="Card.tsx" path="C:\Users\Administrator\Desktop\React\REACT2025\class-components\src\components\Card.tsx">
         <metrics statements="2" coveredstatements="2" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="12" count="5" type="stmt"/>
@@ -77,17 +77,17 @@
         <line num="8" count="0" type="stmt"/>
       </file>
       <file name="Search.tsx" path="C:\Users\Administrator\Desktop\React\REACT2025\class-components\src\components\Search.tsx">
-        <metrics statements="10" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="4" coveredmethods="0"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="14" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="15" count="0" type="stmt"/>
-        <line num="18" count="0" type="stmt"/>
-        <line num="19" count="0" type="stmt"/>
-        <line num="22" count="0" type="stmt"/>
-        <line num="23" count="0" type="stmt"/>
-        <line num="24" count="0" type="stmt"/>
-        <line num="25" count="0" type="stmt"/>
-        <line num="29" count="0" type="stmt"/>
+        <metrics statements="10" coveredstatements="10" conditionals="2" coveredconditionals="2" methods="4" coveredmethods="4"/>
+        <line num="13" count="5" type="stmt"/>
+        <line num="14" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="15" count="5" type="stmt"/>
+        <line num="18" count="5" type="stmt"/>
+        <line num="19" count="3" type="stmt"/>
+        <line num="22" count="5" type="stmt"/>
+        <line num="23" count="2" type="stmt"/>
+        <line num="24" count="2" type="stmt"/>
+        <line num="25" count="2" type="stmt"/>
+        <line num="29" count="8" type="stmt"/>
       </file>
       <file name="SkeletonCard.tsx" path="C:\Users\Administrator\Desktop\React\REACT2025\class-components\src\components\SkeletonCard.tsx">
         <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
