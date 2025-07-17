@@ -3,7 +3,7 @@ import React from 'react';
 interface Props {
   name: string;
   description: string;
-  imageUrl: string;
+  imageUrl?: string;
   first_publish_year: number;
 }
 
@@ -18,7 +18,7 @@ export class Card extends React.Component<Props> {
         <div className="h-[100px] w-[80px] mx-auto">
           <img
             className="w-full h-full object-cover"
-            src={imageUrl}
+            src={imageUrl || '/book.png'}
             alt={name}
           />
         </div>

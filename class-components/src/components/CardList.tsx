@@ -66,9 +66,9 @@ export class CardList extends React.Component<Props, State> {
             key={book.key}
             name={book.title}
             imageUrl={
-              book.cover_i
+              typeof book.cover_i === 'number'
                 ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
-                : '/book.png'
+                : undefined
             }
             description={book.author_name?.join(', ') || 'Автор неизвестен'}
             first_publish_year={book.first_publish_year || 0}
