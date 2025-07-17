@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1752740690711" clover="3.2.0">
-  <project timestamp="1752740690711" name="All files">
-    <metrics statements="57" coveredstatements="31" conditionals="31" coveredconditionals="17" methods="20" coveredmethods="12" elements="108" coveredelements="60" complexity="0" loc="57" ncloc="57" packages="3" files="9" classes="9"/>
+<coverage generated="1752741009604" clover="3.2.0">
+  <project timestamp="1752741009604" name="All files">
+    <metrics statements="57" coveredstatements="33" conditionals="31" coveredconditionals="17" methods="20" coveredmethods="13" elements="108" coveredelements="63" complexity="0" loc="57" ncloc="57" packages="3" files="9" classes="9"/>
     <package name="src">
       <metrics statements="11" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="3" coveredmethods="0"/>
       <file name="App.tsx" path="C:\Users\Administrator\Desktop\React\REACT2025\class-components\src\App.tsx">
@@ -35,7 +35,7 @@
       </file>
     </package>
     <package name="src.components">
-      <metrics statements="40" coveredstatements="31" conditionals="20" coveredconditionals="17" methods="16" coveredmethods="12"/>
+      <metrics statements="40" coveredstatements="33" conditionals="20" coveredconditionals="17" methods="16" coveredmethods="13"/>
       <file name="Card.tsx" path="C:\Users\Administrator\Desktop\React\REACT2025\class-components\src\components\Card.tsx">
         <metrics statements="2" coveredstatements="2" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="12" count="5" type="stmt"/>
@@ -72,9 +72,9 @@
         <line num="34" count="0" type="stmt"/>
       </file>
       <file name="ErrorButton.tsx" path="C:\Users\Administrator\Desktop\React\REACT2025\class-components\src\components\ErrorButton.tsx">
-        <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="0" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
       </file>
       <file name="Search.tsx" path="C:\Users\Administrator\Desktop\React\REACT2025\class-components\src\components\Search.tsx">
         <metrics statements="10" coveredstatements="10" conditionals="2" coveredconditionals="2" methods="4" coveredmethods="4"/>
