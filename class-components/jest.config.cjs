@@ -5,6 +5,9 @@ module.exports = {
       '^.+\\.[jt]sx?$': 'babel-jest',
     },
     moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx'],
+    moduleNameMapper: {
+      '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+    },
     coverageDirectory: 'coverage',
     collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}'],
     coveragePathIgnorePatterns: [
@@ -13,7 +16,7 @@ module.exports = {
       '/src/.*\\.spec\\.[jt]sx?$',
       '/src/index\\.[jt]sx?$',
       '/src/setupTests\\.[jt]s$',
-      '/src/.*\\.d\\.ts$'
+      '/src/.*\\.d\\.ts$',
     ],
     coverageThreshold: {
       global: {
