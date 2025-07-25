@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { fetchBooks, type Book } from '../api/openlibrary';
 import { Card } from './Card';
 import { SkeletonCard } from './SkeletonCard';
@@ -7,74 +7,64 @@ interface Props {
   search: string;
 }
 
-interface State {
-  books: Book[];
-  loading: boolean;
-  error: string;
-}
+export const CardList: React.FC<Props> = ({ search = 'the' }) => {
+  const [books, setBooks] = useState<Book[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-export class CardList extends React.Component<Props, State> {
-  state: State = {
-    books: [],
-    loading: false,
-    error: '',
-  };
+  useEffect(() => {
+    let isMounted = true;
 
-  static defaultProps = { search: 'the' };
+    const loadBooks = async (query: string) => {
+      setLoading(true);
+      setError('');
+      try {
+        const data = await fetchBooks(query);
+        if (isMounted) {
+          setBooks(data.docs);
+        }
+      } catch (e) {
+        if (isMounted) {
+          setError(e instanceof Error ? e.message : 'Unknown error');
+        }
+      } finally {
+        if (isMounted) setLoading(false);
+      }
+    };
 
-  componentDidMount() {
-    this.loadBooks(this.props.search);
-  }
+    loadBooks(search);
 
-  componentDidUpdate(prevProps: Props) {
-    if (prevProps.search !== this.props.search) {
-      this.loadBooks(this.props.search);
-    }
-  }
+    return () => {
+      isMounted = false;
+    };
+  }, [search]);
 
-  async loadBooks(query: string) {
-    this.setState({ loading: true, error: '' });
-    try {
-      const data = await fetchBooks(query);
-      this.setState({ books: data.docs, loading: false });
-    } catch (e) {
-      this.setState({
-        error: e instanceof Error ? e.message : 'Unknown error',
-        loading: false,
-      });
-    }
-  }
-
-  render() {
-    const { books, loading, error } = this.state;
-
-    if (loading) {
-      return (
-        <div className="p-4 flex flex-wrap gap-4 justify-center items-center">
-          {Array.from({ length: 15 }).map((_, index) => (
-            <SkeletonCard key={index} />
-          ))}
-        </div>
-      );
-    }
-    if (error) return <div className="p-4">Error: {error}</div>;
-
+  if (loading) {
     return (
       <div className="p-4 flex flex-wrap gap-4 justify-center items-center">
-        {books.map((book) => (
-          <Card
-            key={book.key}
-            name={book.title}
-            imageUrl={
-              typeof book.cover_i === 'number'
-                ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
-                : undefined
-            }
-            description={book.author_name?.join(', ') || 'Автор неизвестен'}
-            first_publish_year={book.first_publish_year || 0}
-          />
+        {Array.from({ length: 15 }).map((_, index) => (
+          <SkeletonCard key={index} />
         ))}
       </div>
     );
   }
-}
+  if (error) return <div className="p-4">Error: {error}</div>;
+
+  return (
+    <div className="p-4 flex flex-wrap gap-4 justify-center items-center">
+      {books.map((book) => (
+        <Card
+          key={book.key}
+          name={book.title}
+          imageUrl={
+            typeof book.cover_i === 'number'
+              ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
+              : undefined
+          }
+          description={book.author_name?.join(', ') || 'Автор неизвестен'}
+          first_publish_year={book.first_publish_year || 0}
+        />
+      ))}
+    </div>
+  );
+};

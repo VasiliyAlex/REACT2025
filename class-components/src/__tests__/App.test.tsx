@@ -20,14 +20,6 @@ jest.mock('../components/Search', () => ({
   ),
 }));
 
-jest.mock('../components/ErrorButton', () => ({
-  ErrorButton: ({ onClick }: { onClick: () => void }) => (
-    <button onClick={onClick} data-testid="error-button">
-      Trigger Error
-    </button>
-  ),
-}));
-
 describe('App component', () => {
   beforeEach(() => {
     localStorage.clear();
@@ -46,18 +38,5 @@ describe('App component', () => {
     expect(screen.getByTestId('card-list')).toHaveTextContent(
       'Search: Pikachu'
     );
-  });
-
-  it('throws an error when triggerError is set to true', () => {
-    const consoleError = jest
-      .spyOn(console, 'error')
-      .mockImplementation(() => {});
-
-    expect(() => {
-      render(<App />);
-      fireEvent.click(screen.getByTestId('error-button'));
-    }).toThrow('Test error');
-
-    consoleError.mockRestore();
   });
 });

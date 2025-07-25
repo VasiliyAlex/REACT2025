@@ -1,34 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CardList } from './components/CardList';
 import { Search } from './components/Search';
-import { ErrorButton } from './components/ErrorButton';
 import './App.css';
 
-interface State {
-  query: string;
-  triggerError: boolean;
-}
+export const App: React.FC = () => {
+  const [query, setQuery] = useState(() => {
+    return localStorage.getItem('searchQuery') || '';
+  });
 
-export class App extends React.Component<Record<string, never>, State> {
-  state: State = {
-    query: localStorage.getItem('searchQuery') || '',
-    triggerError: false,
+  const handleSearch = (newQuery: string) => {
+    setQuery(newQuery);
   };
 
-  handleSearch = (query: string) => {
-    this.setState({ query });
-  };
-
-  render() {
-    if (this.state.triggerError) {
-      throw new Error('Test error');
-    }
-    return (
-      <div className="flex flex-col min-h-screen">
-        <Search onSearch={this.handleSearch} />
-        <CardList search={this.state.query} />
-        <ErrorButton onClick={() => this.setState({ triggerError: true })} />
-      </div>
-    );
-  }
-}
+  return (
+    <div className="flex flex-col min-h-screen">
+      <Search onSearch={handleSearch} />
+      <CardList search={query} />
+    </div>
+  );
+};
