@@ -1,21 +1,20 @@
-import React, { useState } from 'react';
-import { CardList } from './components/CardList';
-import { Search } from './components/Search';
-import './App.css';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { HomePage } from './pages/HomePage';
+import { AboutPage } from './pages/AboutPages';
+import { NotFoundPage } from './pages/NotFoundPage';
+import { DetailsPage } from './pages/DetailsPage';
+import { Header } from './components/Header';
 
-export const App: React.FC = () => {
-  const [query, setQuery] = useState(() => {
-    return localStorage.getItem('searchQuery') || '';
-  });
-
-  const handleSearch = (newQuery: string) => {
-    setQuery(newQuery);
-  };
-
-  return (
-    <div className="flex flex-col min-h-screen">
-      <Search onSearch={handleSearch} />
-      <CardList search={query} />
-    </div>
-  );
-};
+export const App = () => (
+  <>
+    <Header />
+    <Routes>
+      <Route path="/" element={<Navigate to="/1" />} />
+      <Route path="/:page" element={<HomePage />}>
+        <Route path=":detailsId" element={<DetailsPage />} />
+      </Route>
+      <Route path="/about" element={<AboutPage />} />
+      <Route path="*" element={<NotFoundPage />} />
+    </Routes>
+  </>
+);

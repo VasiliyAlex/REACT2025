@@ -1,70 +1,110 @@
 import React, { useEffect, useState } from 'react';
-import { fetchBooks, type Book } from '../api/openlibrary';
+import { fetchPokemons } from '../api/fetchPokemons';
+import { type PokemonDetails } from '../types/pokemon';
+import { fetchPokemonDetails } from '../api/fetchPokemonDetails';
 import { Card } from './Card';
 import { SkeletonCard } from './SkeletonCard';
+import { Pagination } from './Pagination';
 
-interface Props {
+type Props = {
   search: string;
-}
+  page: number;
+  onPageChange: (newPage: number) => void;
+  onCardClick: (id: string) => void;
+  setIsFading: (value: boolean) => void;
+  isFading: boolean;
+};
 
-export const CardList: React.FC<Props> = ({ search = 'the' }) => {
-  const [books, setBooks] = useState<Book[]>([]);
+export const CardList: React.FC<Props> = ({
+  search,
+  page,
+  onPageChange,
+  onCardClick,
+  setIsFading,
+}) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [pokemons, setPokemons] = useState<PokemonDetails[]>([]);
+  const [totalCount, setTotalCount] = useState(0);
+  const [localFading, setLocalFading] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
 
-    const loadBooks = async (query: string) => {
-      setLoading(true);
-      setError('');
-      try {
-        const data = await fetchBooks(query);
-        if (isMounted) {
-          setBooks(data.docs);
+    const loadPokemons = async () => {
+      setLocalFading(true);
+      setTimeout(async () => {
+        setLoading(true);
+        setError('');
+
+        try {
+          const data = await fetchPokemons(search, page);
+          const detailsArray = await Promise.all(
+            data.results.map((p) => fetchPokemonDetails(p.name))
+          );
+
+          if (isMounted) {
+            setPokemons(page === 1 ? detailsArray : [...detailsArray]);
+            setTotalCount(data.total_records);
+          }
+        } catch (e) {
+          if (isMounted) {
+            setError(e instanceof Error ? e.message : 'Unknown error');
+          }
+        } finally {
+          if (isMounted) {
+            setLoading(false);
+            setLocalFading(false);
+            setIsFading(false);
+          }
         }
-      } catch (e) {
-        if (isMounted) {
-          setError(e instanceof Error ? e.message : 'Unknown error');
-        }
-      } finally {
-        if (isMounted) setLoading(false);
-      }
+      }, 200);
     };
 
-    loadBooks(search);
+    loadPokemons();
 
     return () => {
       isMounted = false;
     };
-  }, [search]);
+  }, [page, search, setIsFading]);
 
-  if (loading) {
-    return (
-      <div className="p-4 flex flex-wrap gap-4 justify-center items-center">
-        {Array.from({ length: 15 }).map((_, index) => (
-          <SkeletonCard key={index} />
-        ))}
-      </div>
-    );
-  }
-  if (error) return <div className="p-4">Error: {error}</div>;
+  const totalPages = Math.ceil(totalCount / 12);
+
+  if (error) return <div className="p-4 text-red-500">Error: {error}</div>;
 
   return (
-    <div className="p-4 flex flex-wrap gap-4 justify-center items-center">
-      {books.map((book) => (
-        <Card
-          key={book.key}
-          name={book.title}
-          imageUrl={
-            typeof book.cover_i === 'number'
-              ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
-              : undefined
-          }
-          description={book.author_name?.join(', ') || 'Автор неизвестен'}
-          first_publish_year={book.first_publish_year || 0}
+    <div>
+      <div className="min-h-[600px] p-4 flex flex-wrap gap-2 justify-center items-center relative">
+        {loading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {Array.from({ length: 12 }).map((_, index) => (
+              <SkeletonCard key={`skeleton-${index}`} />
+            ))}
+          </div>
+        ) : (
+          <div
+            className={`flex flex-wrap justify-center gap-4
+            transition-opacity duration-500
+            ${localFading ? 'opacity-0' : 'opacity-100'}`}
+          >
+            {pokemons.map((pokemon) => (
+              <Card
+                key={pokemon.id}
+                pokemon={pokemon}
+                onClick={() => onCardClick(pokemon.id.toString())}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+
+      {!loading && totalPages > 1 && (
+        <Pagination
+          currentPage={page}
+          totalPages={totalPages}
+          onPageChange={onPageChange}
         />
-      ))}
+      )}
     </div>
   );
 };

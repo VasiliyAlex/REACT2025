@@ -1,32 +1,28 @@
 import React from 'react';
+import { type PokemonDetails } from '../types/pokemon';
 
 interface Props {
-  name: string;
-  description: string;
-  imageUrl?: string;
-  first_publish_year: number;
+  pokemon: PokemonDetails;
+  onClick: () => void;
 }
 
-export const Card: React.FC<Props> = ({
-  name,
-  description,
-  imageUrl,
-  first_publish_year,
-}) => {
+export const Card: React.FC<Props> = ({ pokemon, onClick }) => {
+  const imgSrc = pokemon.sprites.front_default;
   return (
-    <div className="border p-2 rounded shadow bg-white w-[200px] h-[300px]">
-      <h3 className="font-bold text-lg text-gray-800 h-[90px] line-clamp-3">
-        {name}
-      </h3>
-      <div className="h-[100px] w-[80px] mx-auto">
+    <div
+      onClick={onClick}
+      className="w-40 p-2 bg-white rounded shadow hover:scale-105 transition cursor-pointer"
+    >
+      {imgSrc && imgSrc.trim() !== '' ? (
         <img
-          className="w-full h-full object-cover"
-          src={imageUrl || '/book.png'}
-          alt={name}
+          src={imgSrc}
+          alt={pokemon.name}
+          className="w-full h-32 object-contain"
         />
+      ) : null}
+      <div className="text-center mt-2 font-semibold capitalize text-gray-500">
+        {pokemon.name}
       </div>
-      <p className="text-sm text-gray-600">{first_publish_year}</p>
-      <p className="text-sm text-gray-600 line-clamp-4">{description}</p>
     </div>
   );
 };

@@ -1,3 +1,9 @@
 export const SkeletonCard = () => (
-  <div className="w-[200px] h-[300px] bg-gray-200 animate-pulse rounded shadow" />
+  <div
+    data-testid="skeleton"
+    className="w-40 p-2 bg-white rounded shadow animate-pulse"
+  >
+    <div className="w-full h-32 bg-gray-200 rounded" />
+    <div className="h-4 bg-gray-200 rounded mt-2 mx-auto w-3/4" />
+  </div>
 );

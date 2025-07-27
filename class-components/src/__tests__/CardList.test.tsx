@@ -1,98 +1,68 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { CardList } from '../components/CardList';
-import * as api from '../api/openlibrary';
+import * as api from '../api/fetchPokemons';
+import { type PokemonDetails } from '../types/pokemon';
 
 jest.mock('../components/Card', () => ({
-  Card: ({ name }: { name: string }) => <div data-testid="card">{name}</div>,
+  Card: ({ pokemon }: { pokemon: PokemonDetails }) => (
+    <div data-testid="card">{pokemon.name}</div>
+  ),
 }));
+
 jest.mock('../components/SkeletonCard', () => ({
   SkeletonCard: () => <div data-testid="skeleton" />,
 }));
 
-jest.mock('../api/openlibrary');
+jest.mock('../api/fetchPokemons');
+jest.mock('../api/fetchPokemonDetails');
 
-const mockedFetchBooks = api.fetchBooks as jest.MockedFunction<
-  typeof api.fetchBooks
->;
+const mockedFetchPokemons = api.fetchPokemons as jest.Mock;
 
-describe('<CardList />', () => {
+describe('CardList', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  const baseProps = {
+    search: '',
+    page: 1,
+    onPageChange: jest.fn(),
+    onCardClick: jest.fn(),
+    setIsFading: jest.fn(),
+    isFading: false,
+  };
+
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  it('displays loading indicators while data is being fetched', async () => {
-    mockedFetchBooks.mockResolvedValueOnce({ docs: [] });
+  it('displays loading skeletons while fetching', async () => {
+    (api.fetchPokemons as jest.Mock).mockImplementation(
+      () => new Promise(() => {})
+    );
 
-    render(<CardList search="harry" />);
+    render(
+      <CardList
+        search=""
+        page={1}
+        onPageChange={() => {}}
+        onCardClick={() => {}}
+        setIsFading={() => {}}
+        isFading={false}
+      />
+    );
 
-    expect(screen.getAllByTestId('skeleton')).toHaveLength(15);
-    await waitFor(() => expect(mockedFetchBooks).toHaveBeenCalled());
+    const skeletons = await screen.findAllByTestId('skeleton');
+    expect(skeletons.length).toBe(12);
   });
 
-  it('displays the list of books after loading', async () => {
-    mockedFetchBooks.mockResolvedValueOnce({
-      docs: [
-        {
-          key: '1',
-          title: 'Harry Potter',
-          cover_i: 123,
-          author_name: ['J.K. Rowling'],
-          first_publish_year: 1997,
-        },
-        {
-          key: '2',
-          title: 'LOTR',
-          cover_i: undefined,
-          author_name: undefined,
-          first_publish_year: undefined,
-        },
-      ],
-    });
+  it('shows error message if fetch fails', async () => {
+    mockedFetchPokemons.mockRejectedValueOnce(new Error('API Error'));
 
-    render(<CardList search="magic" />);
-    expect(screen.getAllByTestId('skeleton')).toHaveLength(15);
+    render(<CardList {...baseProps} />);
 
-    await waitFor(() => {
-      expect(screen.getAllByTestId('card')).toHaveLength(2);
-    });
-
-    expect(screen.getByText('Harry Potter')).toBeInTheDocument();
-    expect(screen.getByText('LOTR')).toBeInTheDocument();
-  });
-
-  it('displays an error message when the API call fails', async () => {
-    mockedFetchBooks.mockRejectedValueOnce(new Error('Failed to fetch'));
-
-    render(<CardList search="error" />);
-
-    await waitFor(() => {
-      expect(screen.getByText(/Error: Failed to fetch/)).toBeInTheDocument();
-    });
-  });
-
-  it('handles re-rendering with a new query', async () => {
-    mockedFetchBooks
-      .mockResolvedValueOnce({
-        docs: [{ key: '1', title: 'First', cover_i: 1 }],
-      })
-      .mockResolvedValueOnce({
-        docs: [{ key: '2', title: 'Second', cover_i: 2 }],
-      });
-
-    const { rerender } = render(<CardList search="first" />);
-    await waitFor(() => expect(screen.getByText('First')).toBeInTheDocument());
-
-    rerender(<CardList search="second" />);
-    await waitFor(() => expect(screen.getByText('Second')).toBeInTheDocument());
-  });
-
-  it('displays an empty result without errors if the book array is empty', async () => {
-    mockedFetchBooks.mockResolvedValueOnce({ docs: [] });
-
-    render(<CardList search="empty" />);
-
-    await waitFor(() => {
-      expect(screen.queryByTestId('card')).not.toBeInTheDocument();
-    });
+    await waitFor(() =>
+      expect(screen.getByText(/Error: API Error/)).toBeInTheDocument()
+    );
   });
 });
