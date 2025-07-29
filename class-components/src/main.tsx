@@ -1,10 +1,11 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
-import { App } from './App';
 import { ErrorBoundary } from './components/ErrorBoundary';
-import { BrowserRouter } from 'react-router-dom';
-
+import { RouterProvider } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from './store/index';
+import { router } from './router/router'; 
 const container = document.getElementById('root');
 if (!container) {
   throw new Error('Root element not found');
@@ -12,10 +13,10 @@ if (!container) {
 
 createRoot(container).render(
   <StrictMode>
-    <BrowserRouter>
+    <Provider store={store}>
       <ErrorBoundary>
-        <App />
+      <RouterProvider router={router} />
       </ErrorBoundary>
-    </BrowserRouter>
+    </Provider>
   </StrictMode>
 );

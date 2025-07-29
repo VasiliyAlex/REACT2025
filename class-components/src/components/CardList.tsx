@@ -5,6 +5,7 @@ import { fetchPokemonDetails } from '../api/fetchPokemonDetails';
 import { Card } from './Card';
 import { SkeletonCard } from './SkeletonCard';
 import { Pagination } from './Pagination';
+import { useAppSelector } from '../hooks/storeHooks';
 
 type Props = {
   search: string;
@@ -27,6 +28,9 @@ export const CardList: React.FC<Props> = ({
   const [pokemons, setPokemons] = useState<PokemonDetails[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [localFading, setLocalFading] = useState(false);
+  const selected = useAppSelector((state) => state.selectedPokemons.selected);
+  console.log(selected);
+  
 
   useEffect(() => {
     let isMounted = true;

@@ -27,10 +27,16 @@ export async function fetchPokemons(
         pokemon.name.includes(normalizedQuery)
       );
 
+      const totalFiltered = filtered.length;
+      const totalPages = Math.ceil(totalFiltered / PAGE_LIMIT);
+
+      const start = (page - 1) * PAGE_LIMIT;
+      const paginatedResults = filtered.slice(start, start + PAGE_LIMIT);
+
       return {
-        results: filtered,
-        total_records: filtered.length,
-        total_pages: 1,
+        results: paginatedResults,
+        total_records: totalFiltered,
+        total_pages: totalPages,
       };
     } else {
       const offset = (page - 1) * PAGE_LIMIT;
