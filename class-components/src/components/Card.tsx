@@ -37,7 +37,10 @@ export const Card = React.memo(({ pokemon, onClick }: Props) => {
         <p className="text-center text-gray-500">{pokemon.id}</p>
       </div>
 
-      <SelectableCheckbox checked={isSelected} onToggle={handleCheckboxChange} />
+      <SelectableCheckbox
+        checked={isSelected}
+        onToggle={handleCheckboxChange}
+      />
     </div>
   );
 });

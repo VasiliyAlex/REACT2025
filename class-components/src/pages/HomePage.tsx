@@ -18,7 +18,6 @@ export const HomePage = () => {
   const numericPage = parseInt(page, 10);
   const navigate = useNavigate();
   const [isFading, setIsFading] = useState(false);
-  
 
   const buildUrlWithQuery = (path: string, q: string | null) => {
     if (q && q.trim() !== '') {

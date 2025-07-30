@@ -3,6 +3,7 @@ import { fetchPokemons } from '../api/fetchPokemons';
 import { type PokemonDetails } from '../types/pokemon';
 import { fetchPokemonDetails } from '../api/fetchPokemonDetails';
 import { Card } from './Card';
+import { SelectionFooter } from './SelectionFooter';
 import { SkeletonCard } from './SkeletonCard';
 import { Pagination } from './Pagination';
 import { useAppSelector } from '../hooks/storeHooks';
@@ -30,7 +31,6 @@ export const CardList: React.FC<Props> = ({
   const [localFading, setLocalFading] = useState(false);
   const selected = useAppSelector((state) => state.selectedPokemons.selected);
   console.log(selected);
-  
 
   useEffect(() => {
     let isMounted = true;
@@ -77,7 +77,7 @@ export const CardList: React.FC<Props> = ({
   if (error) return <div className="p-4 text-red-500">Error: {error}</div>;
 
   return (
-    <div>
+    <div className="pb-24"> 
       <div className="min-h-[600px] p-4 flex flex-wrap gap-2 justify-center items-center relative">
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -109,6 +109,7 @@ export const CardList: React.FC<Props> = ({
           onPageChange={onPageChange}
         />
       )}
+        <SelectionFooter />
     </div>
   );
 };

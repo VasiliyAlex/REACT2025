@@ -30,7 +30,7 @@ export const router = createBrowserRouter([
           {
             path: ':detailsId',
             loader: ({ params }) => {
-                const id = Number(params.detailsId);
+              const id = Number(params.detailsId);
               if (Number.isNaN(id) || id < 1) {
                 throw new Response('Not Found', { status: 404 });
               }

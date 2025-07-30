@@ -5,7 +5,7 @@ import { ErrorBoundary } from './components/ErrorBoundary';
 import { RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store/index';
-import { router } from './router/router'; 
+import { router } from './router/router';
 const container = document.getElementById('root');
 if (!container) {
   throw new Error('Root element not found');
@@ -15,7 +15,7 @@ createRoot(container).render(
   <StrictMode>
     <Provider store={store}>
       <ErrorBoundary>
-      <RouterProvider router={router} />
+        <RouterProvider router={router} />
       </ErrorBoundary>
     </Provider>
   </StrictMode>
