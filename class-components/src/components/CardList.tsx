@@ -77,7 +77,7 @@ export const CardList: React.FC<Props> = ({
   if (error) return <div className="p-4 text-red-500">Error: {error}</div>;
 
   return (
-    <div className="pb-24"> 
+    <div className="pb-24">
       <div className="min-h-[600px] p-4 flex flex-wrap gap-2 justify-center items-center relative">
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -109,7 +109,7 @@ export const CardList: React.FC<Props> = ({
           onPageChange={onPageChange}
         />
       )}
-        <SelectionFooter />
+      <SelectionFooter />
     </div>
   );
 };

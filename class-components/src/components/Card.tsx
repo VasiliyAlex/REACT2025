@@ -22,7 +22,7 @@ export const Card = React.memo(({ pokemon, onClick }: Props) => {
   const imgSrc = pokemon.sprites.front_default;
 
   return (
-    <div className="relative group w-40 p-2 bg-white rounded shadow transition-transform hover:scale-105 cursor-pointer">
+    <div className="relative group w-40 p-2 bg-gray-100 dark:bg-gray-400 rounded shadow transition-transform hover:scale-105 cursor-pointer">
       <div onClick={onClick}>
         {imgSrc?.trim() ? (
           <img
@@ -31,10 +31,9 @@ export const Card = React.memo(({ pokemon, onClick }: Props) => {
             className="w-full h-32 object-contain"
           />
         ) : null}
-        <div className="text-center mt-2 font-semibold capitalize text-gray-500">
+        <div className="text-center mt-2 font-semibold capitalize text-gray-500 dark:text-white">
           {pokemon.name}
         </div>
-        <p className="text-center text-gray-500">{pokemon.id}</p>
       </div>
 
       <SelectableCheckbox
@@ -44,3 +43,5 @@ export const Card = React.memo(({ pokemon, onClick }: Props) => {
     </div>
   );
 });
+
+Card.displayName = 'Card';

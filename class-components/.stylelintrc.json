@@ -3,5 +3,8 @@
     "stylelint-config-standard",
     "stylelint-config-clean-order",
     "stylelint-config-tailwindcss"
-  ]
+  ],
+  "rules": {
+    "at-rule-no-deprecated": null
+  }
 }

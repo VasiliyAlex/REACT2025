@@ -9,14 +9,16 @@ export const Pagination = ({ currentPage, onPageChange }: PaginationProps) => (
     <button
       disabled={currentPage <= 1}
       onClick={() => onPageChange(currentPage - 1)}
-      className="px-3 py-1 bg-gray-300"
+      className="px-3 py-1 bg-blue-500"
     >
       Prev
     </button>
-    <span className="px-3 py-1">{currentPage}</span>
+    <span className="px-3 py-1 text-gray-600 dark:text-white">
+      {currentPage}
+    </span>
     <button
       onClick={() => onPageChange(currentPage + 1)}
-      className="px-3 py-1 bg-gray-300"
+      className="px-3 py-1 bg-blue-500"
     >
       Next
     </button>

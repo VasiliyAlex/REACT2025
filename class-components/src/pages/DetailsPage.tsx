@@ -51,33 +51,33 @@ export const DetailsPage = () => {
   if (!pokemon) return <div className="p-4">No data available</div>;
 
   return (
-    <div>
-      <div className="w-full max-w-[300px] mx-auto bg-white rounded-xl shadow-md space-y-4 px-4 py-6">
-        <h2 className="text-2xl font-bold text-gray-800 capitalize">
-          {pokemon.name}
-        </h2>
-        <img
-          src={pokemon.sprites.front_default}
-          alt={pokemon.name}
-          className="w-32 h-32 mx-auto"
-        />
-        <ul className="text-gray-700 text-sm space-y-1 text-center">
-          <li>
-            <strong>ID:</strong> {pokemon.id}
-          </li>
-          <li>
-            <strong>Types:</strong>{' '}
-            {pokemon.types.map((t) => t.type.name).join(', ')}
-          </li>
-          <li>
-            <strong>Height:</strong> {pokemon.height}
-          </li>
-          <li>
-            <strong>Weight:</strong> {pokemon.weight}
-          </li>
-        </ul>
-      </div>
-      <button onClick={handleClose}>Close</button>
+    <div className="w-full max-w-[300px] mx-auto bg-gray-100 dark:bg-gray-400 rounded-xl shadow-md space-y-4 px-4 py-6">
+      <h2 className="text-2xl font-bold text-gray-800 dark:text-white capitalize">
+        {pokemon.name}
+      </h2>
+      <img
+        src={pokemon.sprites.front_default}
+        alt={pokemon.name}
+        className="w-32 h-32 mx-auto"
+      />
+      <ul className="text-gray-700 dark:text-white text-sm space-y-1 text-center">
+        <li>
+          <strong>Types:</strong>{' '}
+          {pokemon.types.map((t) => t.type.name).join(', ')}
+        </li>
+        <li>
+          <strong>Height:</strong> {pokemon.height}
+        </li>
+        <li>
+          <strong>Weight:</strong> {pokemon.weight}
+        </li>
+      </ul>
+      <button
+        className="ml-auto px-4 py-1 bg-blue-500 text-white p-2 "
+        onClick={handleClose}
+      >
+        Close
+      </button>
     </div>
   );
 };
