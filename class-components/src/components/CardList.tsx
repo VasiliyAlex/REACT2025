@@ -87,8 +87,8 @@ export const CardList: React.FC<Props> = ({
           </div>
         ) : (
           <div
-            className={`flex flex-wrap justify-center gap-4
-            transition-opacity duration-500
+            className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4
+  transition-opacity duration-500
             ${localFading ? 'opacity-0' : 'opacity-100'}`}
           >
             {pokemons.map((pokemon) => (

@@ -19,7 +19,7 @@ export const Card = React.memo(({ pokemon, onClick }: Props) => {
     dispatch(toggleSelected(pokemon));
   };
 
-  const imgSrc = pokemon.sprites.front_default;
+  const imgSrc = pokemon.sprites?.front_default;
 
   return (
     <div className="relative group w-40 p-2 bg-gray-100 dark:bg-gray-400 rounded shadow transition-transform hover:scale-105 cursor-pointer">

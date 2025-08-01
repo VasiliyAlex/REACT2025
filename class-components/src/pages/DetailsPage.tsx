@@ -6,13 +6,17 @@ import { useNavigate } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
 import { SkeletonDetails } from '../components/SkeletonDetails';
 
+type DetailsParams = {
+  page?: string;
+  detailsId: string;
+};
+
 export const DetailsPage = () => {
-  const { detailsId } = useParams();
   const [pokemon, setPokemon] = useState<PokemonDetails | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { page = '1' } = useParams();
+  const { page = '1', detailsId } = useParams<DetailsParams>();
   const [searchParams] = useSearchParams();
 
   const handleClose = () => {
@@ -35,8 +39,10 @@ export const DetailsPage = () => {
         const delay = Math.max(2000 - elapsed, 0);
 
         setTimeout(() => setLoading(false), delay);
-      } catch (e) {
-        setError(e instanceof Error ? e.message : 'Unknown error');
+      } catch (error) {
+        const errorMessage =
+          error instanceof Error ? error.message : 'unknown error';
+        setError(errorMessage);
         const elapsed = Date.now() - start;
         const delay = Math.max(2000 - elapsed, 0);
         setTimeout(() => setLoading(false), delay);

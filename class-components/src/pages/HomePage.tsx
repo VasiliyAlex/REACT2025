@@ -27,12 +27,16 @@ export const HomePage = () => {
   };
 
   const handleSearch = (newQuery: string) => {
-    if (newQuery.trim()) {
-      setSearchParams({ q: newQuery });
+    const trimmed = newQuery.trim();
+
+    if (trimmed) {
+      setSearchParams({ q: trimmed });
     } else {
       setSearchParams({});
     }
-    setQuery(newQuery);
+
+    setQuery(trimmed);
+    navigate(buildUrlWithQuery('/1', trimmed));
   };
 
   const handlePageChange = (newPage: number) => {
