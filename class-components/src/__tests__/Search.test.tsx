@@ -1,4 +1,5 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { Search } from '../components/Search';
 
 describe('<Search />', () => {
@@ -9,7 +10,7 @@ describe('<Search />', () => {
     jest.clearAllMocks();
   });
 
-  test('renders input and button', () => {
+  it('renders input and button', () => {
     render(<Search onSearch={mockOnSearch} />);
     expect(
       screen.getByPlaceholderText(/enter your query/i)
@@ -17,36 +18,48 @@ describe('<Search />', () => {
     expect(screen.getByRole('button', { name: /search/i })).toBeInTheDocument();
   });
 
-  test('loads search query from localStorage on mount', () => {
+  it('loads search query from localStorage on mount', () => {
     localStorage.setItem('searchQuery', 'saved term');
     render(<Search onSearch={mockOnSearch} />);
     expect(screen.getByDisplayValue('saved term')).toBeInTheDocument();
   });
 
-  test('updates input value on user typing', () => {
+  it('updates input value on user typing', async () => {
     render(<Search onSearch={mockOnSearch} />);
     const input = screen.getByPlaceholderText(/enter your query/i);
-    fireEvent.change(input, { target: { value: 'test input' } });
+    await userEvent.type(input, 'test input');
     expect(screen.getByDisplayValue('test input')).toBeInTheDocument();
   });
 
-  test('trims, saves and submits search query on button click', () => {
+  it('submits trimmed input value on button click', async () => {
     render(<Search onSearch={mockOnSearch} />);
     const input = screen.getByPlaceholderText(/enter your query/i);
     const button = screen.getByRole('button', { name: /search/i });
 
-    fireEvent.change(input, { target: { value: '   hello   ' } });
-    fireEvent.click(button);
+    await userEvent.type(input, '   hello   ');
+    await userEvent.click(button);
 
-    expect(localStorage.getItem('searchQuery')).toBe('hello');
     expect(mockOnSearch).toHaveBeenCalledWith('hello');
   });
 
-  test('submits empty string if input is only spaces', () => {
+  it('saves trimmed search query to localStorage', async () => {
     render(<Search onSearch={mockOnSearch} />);
     const input = screen.getByPlaceholderText(/enter your query/i);
-    fireEvent.change(input, { target: { value: '   ' } });
-    fireEvent.click(screen.getByRole('button'));
+    const button = screen.getByRole('button', { name: /search/i });
+
+    await userEvent.type(input, '   hello   ');
+    await userEvent.click(button);
+
+    expect(localStorage.getItem('searchQuery')).toBe('hello');
+  });
+
+  it('submits empty string if input is only spaces', async () => {
+    render(<Search onSearch={mockOnSearch} />);
+    const input = screen.getByPlaceholderText(/enter your query/i);
+    const button = screen.getByRole('button');
+
+    await userEvent.type(input, '   ');
+    await userEvent.click(button);
 
     expect(localStorage.getItem('searchQuery')).toBe('');
     expect(mockOnSearch).toHaveBeenCalledWith('');
