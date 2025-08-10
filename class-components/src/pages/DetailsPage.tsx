@@ -35,16 +35,25 @@ export const DetailsPage = () => {
       setLoading(true);
       const timeout = setTimeout(() => setLoading(false), 500);
       return () => clearTimeout(timeout);
+    } else {
+      setLoading(false);
     }
-  }, [pokemon]);
+  }, [pokemon, error]);
 
   if (!detailsId) {
     return <div className="p-4 text-red-500">Missing Pokémon ID</div>;
   }
 
   if (loading) return <SkeletonDetails />;
-  if (error)
-    return <div className="p-4 text-red-500">Error: Error loading data</div>;
+  if (error) {
+    const errorMessage =
+      error instanceof Error
+        ? `Error: ${error.message}`
+        : 'Error: unknown error';
+
+    return <div className="p-4 text-red-500">{errorMessage}</div>;
+  }
+
   if (!pokemon) return <div className="p-4">No data available</div>;
 
   return (
