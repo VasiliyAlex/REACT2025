@@ -1,0 +1,11 @@
+{
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-clean-order",
+    "stylelint-config-tailwindcss"
+  ],
+  "rules": {
+    "at-rule-no-deprecated": null
+  },
+  "ignoreFiles": ["dist/**/*", "node_modules/**/*"]
+}
