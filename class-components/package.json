@@ -8,11 +8,12 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "format:fix": "prettier --write .",
-    "stylelint": "stylelint \"**/*.css\" --fix",
+    "stylelint": "stylelint \"src/**/*.{css,scss}\" --fix",
     "preview": "vite preview",
     "prepare": "cd .. && husky ./class-components/.husky",
     "test": "jest",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "deploy": "npm run build && netlify deploy --prod --dir=dist"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.2",
@@ -60,6 +61,7 @@
     "jest-environment-jsdom": "^30.0.5",
     "jest-fetch-mock": "^3.0.3",
     "lint-staged": "^16.1.2",
+    "netlify-cli": "^22.4.0",
     "postcss": "^8.4.38",
     "prettier": "3.6.2",
     "redux-mock-store": "^1.5.5",

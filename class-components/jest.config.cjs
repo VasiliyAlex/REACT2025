@@ -17,6 +17,7 @@ module.exports = {
     '/src/index\\.[jt]sx?$',
     '/src/setupTests\\.[jt]s$',
     '/src/.*\\.d\\.ts$',
+    '/src/test-utils/',
   ],
   coverageThreshold: {
     global: {

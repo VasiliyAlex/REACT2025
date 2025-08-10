@@ -6,5 +6,6 @@
   ],
   "rules": {
     "at-rule-no-deprecated": null
-  }
+  },
+  "ignoreFiles": ["dist/**/*", "node_modules/**/*"]
 }
