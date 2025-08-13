@@ -1,0 +1,5 @@
+{
+ "*.css": ["stylelint --fix --allow-empty-input", "prettier --write"],
+  "*.{ts,tsx}": ["eslint --fix", "prettier --write"],
+  "!coverage/**": "echo 'skip coverage files'"
+}
