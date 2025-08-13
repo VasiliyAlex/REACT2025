@@ -5,14 +5,16 @@ const PAGE_LIMIT = 12;
 
 export async function fetchPokemons(
   query = '',
-  page = 1
+  page = 1,
+  options?: RequestInit
 ): Promise<PokeResponse> {
   const normalizedQuery = query.trim().toLowerCase();
 
   try {
     if (normalizedQuery) {
       const allRes = await fetch(
-        `https://pokeapi.co/api/v2/pokemon?limit=2000`
+        `https://pokeapi.co/api/v2/pokemon?limit=2000`,
+        options
       );
       if (!allRes.ok) {
         const errText = await allRes.text();

@@ -22,27 +22,21 @@ export const DetailsPage = () => {
 
   useEffect(() => {
     if (!detailsId) return;
-
     const loadPokemon = async () => {
+      const start = Date.now();
       try {
         setLoading(true);
         setError('');
-        const start = Date.now();
         const data = await fetchPokemonDetails(detailsId);
         setPokemon(data);
-
-        const elapsed = Date.now() - start;
-        const delay = Math.max(2000 - elapsed, 0);
-
-        setTimeout(() => setLoading(false), delay);
       } catch (e) {
         setError(e instanceof Error ? e.message : 'Unknown error');
+      } finally {
         const elapsed = Date.now() - start;
         const delay = Math.max(2000 - elapsed, 0);
         setTimeout(() => setLoading(false), delay);
       }
     };
-    const start = Date.now();
     loadPokemon();
   }, [detailsId]);
 

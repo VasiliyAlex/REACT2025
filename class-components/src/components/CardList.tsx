@@ -29,42 +29,43 @@ export const CardList: React.FC<Props> = ({
   const [localFading, setLocalFading] = useState(false);
 
   useEffect(() => {
-    let isMounted = true;
+    const controller = new AbortController();
 
-    const loadPokemons = async () => {
+    const timeoutId = setTimeout(async () => {
       setLocalFading(true);
-      setTimeout(async () => {
-        setLoading(true);
-        setError('');
+      setLoading(true);
+      setError('');
 
-        try {
-          const data = await fetchPokemons(search, page);
-          const detailsArray = await Promise.all(
-            data.results.map((p) => fetchPokemonDetails(p.name))
-          );
+      try {
+        const data = await fetchPokemons(search, page, {
+          signal: controller.signal,
+        });
+        const detailsArray = await Promise.all(
+          data.results.map((p) =>
+            fetchPokemonDetails(p.name, { signal: controller.signal })
+          )
+        );
 
-          if (isMounted) {
-            setPokemons(page === 1 ? detailsArray : [...detailsArray]);
-            setTotalCount(data.total_records);
+        setPokemons(page === 1 ? detailsArray : [...detailsArray]);
+        setTotalCount(data.total_records);
+      } catch (e) {
+        if (e instanceof Error) {
+          if (e.name !== 'AbortError') {
+            setError(e.message);
           }
-        } catch (e) {
-          if (isMounted) {
-            setError(e instanceof Error ? e.message : 'Unknown error');
-          }
-        } finally {
-          if (isMounted) {
-            setLoading(false);
-            setLocalFading(false);
-            setIsFading(false);
-          }
+        } else {
+          setError('Unknown error');
         }
-      }, 200);
-    };
-
-    loadPokemons();
+      } finally {
+        setLoading(false);
+        setLocalFading(false);
+        setIsFading(false);
+      }
+    }, 200);
 
     return () => {
-      isMounted = false;
+      clearTimeout(timeoutId);
+      controller.abort();
     };
   }, [page, search, setIsFading]);
 

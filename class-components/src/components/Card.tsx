@@ -13,13 +13,13 @@ export const Card: React.FC<Props> = ({ pokemon, onClick }) => {
       onClick={onClick}
       className="w-40 p-2 bg-white rounded shadow hover:scale-105 transition cursor-pointer"
     >
-      {imgSrc && imgSrc.trim() !== '' ? (
+      {imgSrc && imgSrc.trim() !== '' && (
         <img
           src={imgSrc}
           alt={pokemon.name}
           className="w-full h-32 object-contain"
         />
-      ) : null}
+      )}
       <div className="text-center mt-2 font-semibold capitalize text-gray-500">
         {pokemon.name}
       </div>

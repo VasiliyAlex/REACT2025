@@ -10,8 +10,8 @@ export const App = () => (
     <Header />
     <Routes>
       <Route path="/" element={<Navigate to="/1" />} />
-      <Route path="/:page" element={<HomePage />}>
-        <Route path=":detailsId" element={<DetailsPage />} />
+      <Route path="/:pageNumber" element={<HomePage />}>
+        <Route path=":pokemonId" element={<DetailsPage />} />
       </Route>
       <Route path="/about" element={<AboutPage />} />
       <Route path="*" element={<NotFoundPage />} />
